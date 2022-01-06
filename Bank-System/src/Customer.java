@@ -13,7 +13,14 @@ public class Customer {
     private String name;
     public static final String CHEQUING = "CHEQUING";
     public static final String SAVING = "SAVING";
-    private final int OVERDRAFT = -100;
+    private final double OVERDRAFT = -100;
+
+    public double getSavingBalance(){
+        return savingBalance;
+    }
+    public double getChequingBalance(){
+        return chequingBalance;
+    }
 
     Customer(){
         name = "";
@@ -39,6 +46,10 @@ public class Customer {
         this.savingBalance += savingDeposit;
     }
 
+    //makes a deposit object and adds to the list of deposits
+    //requires: double amt, Date date, String account
+    //modifies ArrayList<Deposit> deposits
+
     public double deposit(double amt, Date date, String account){
         Deposit deposit = new Deposit(amt, date, account);
         deposits.add(deposit);
@@ -51,6 +62,11 @@ public class Customer {
 
         return 0;
     }
+
+    //makes a withdraw object and adds to the list of withdrawals
+    //requires: double amt, Date date, String account
+    //modifies ArrayList<Withdraw> withdraws
+
     public double withdraw(double amt, Date date, String account){
         if(!checkOverdraft(amt, account)){
             Withdraw withdraw = new Withdraw(amt, date, account);
@@ -68,18 +84,21 @@ public class Customer {
     }
 
 
+
+
     private boolean checkOverdraft(double amt, String account){
 
         if(account.equals(CHEQUING)){
-            if (amt > chequingBalance){
+            if (chequingBalance-amt < OVERDRAFT){
                 return true;
             }
         }
         if(account.equals(SAVING)){
-            if(amt > savingBalance){
+            if(savingBalance-amt < OVERDRAFT ){
                 return true;
             }
         }
+
 
         return false;
     }
@@ -98,6 +117,14 @@ public class Customer {
     public void displayWithdraws(){
         for(Withdraw w : withdraws){
             System.out.println(w);
+        }
+    }
+    public void displayBalance(String account){
+        if (account.equals(CHEQUING)){
+            System.out.println(this.getChequingBalance());
+        }
+        if (account.equals(SAVING)){
+            System.out.println(this.getSavingBalance());
         }
     }
 }

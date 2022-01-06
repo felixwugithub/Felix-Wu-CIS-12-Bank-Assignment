@@ -7,11 +7,21 @@ public class Deposit {
     private Date date;
     private String account;
 
+
     Deposit(double amount, Date date, String account){
         this.amount = amount;
         this.date = date;
         this.account = account.toUpperCase();
     }
+
+    /*
+
+    requires the object to be initialized (obviously) with amount, date, acount
+    prints the deposit amount, the date of deposit, and the account affected.
+
+     does not take inputs
+     does not modify
+     */
 
     public String toString() {
         String output = "";
