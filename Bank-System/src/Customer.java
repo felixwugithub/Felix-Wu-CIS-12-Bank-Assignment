@@ -46,28 +46,35 @@ public class Customer {
         this.savingBalance += savingDeposit;
     }
 
-    //makes a deposit object and adds to the list of deposits
-    //requires: double amt, Date date, String account
-    //modifies ArrayList<Deposit> deposits
+
+    //Requires: amt > 0, Date date, String account.equals("CHEQUING" || "SAVING")
+    //Modifies deposits
+    //Effects: makes a deposit object and adds to the list of deposits
 
     public double deposit(double amt, Date date, String account){
+
+        if(amt > 0){
         Deposit deposit = new Deposit(amt, date, account);
         deposits.add(deposit);
-
         if(account.toUpperCase().equals(CHEQUING)){
             chequingBalance+=amt;
         }else if(account.toUpperCase().equals(SAVING)){
             savingBalance+=amt;
         }
-
-        return 0;
+        return 0;}
+        else{
+            return -1;
+        }
     }
 
-    //makes a withdraw object and adds to the list of withdrawals
-    //requires: double amt, Date date, String account
-    //modifies ArrayList<Withdraw> withdraws
+
+    //Requires: amt > 0, Date date, String account.equals("CHEQUING"||"SAVING")
+    //Modifies: withdraws
+    //Effects:  creates a withdraw object with specified values and adds it to the ArrayList withdraws.
 
     public double withdraw(double amt, Date date, String account){
+
+        if(amt > 0){
         if(!checkOverdraft(amt, account)){
             Withdraw withdraw = new Withdraw(amt, date, account);
             withdraws.add(withdraw);
@@ -81,7 +88,11 @@ public class Customer {
             return -1;
         }
         return 0;
+    }else{
+            return -1;
+        }
     }
+
 
 
 
